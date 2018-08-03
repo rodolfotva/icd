@@ -1,0 +1,30 @@
+body {
+	padding-top: 50px;
+}
+.starter-template {
+	padding: 40px 15px;
+	text-align: center
+}
+.chapterNumber {
+	padding-left:20px;
+	font-size:40px
+}
+.chapterTitle {
+	color:#00B700;
+	font-size:20px;
+	cursor: pointer
+}
+.bread {
+	padding-bottom: 20px
+}
+.breadStep {
+	color:#00B700;
+	cursor: pointer
+}	
+.chapter-row {
+	height: 110px
+}
+
+.group-row {
+	height: 110px
+}
