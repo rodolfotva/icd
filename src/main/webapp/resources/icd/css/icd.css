@@ -28,3 +28,23 @@ body {
 .group-row {
 	height: 110px
 }
+.footer {
+	padding-top: 6px;
+	position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #f0f0f0;
+   color: black;
+   text-align: center;
+   height: 35px;
+}
+
+.container_icd {
+	padding-bottom: 100px;
+}
+
+.donateBtn {
+	padding-top: 50px;
+}	
+}

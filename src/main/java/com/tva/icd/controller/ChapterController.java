@@ -1,8 +1,12 @@
 package com.tva.icd.controller;
 
 import java.util.List;
+import java.util.Objects;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.tva.icd.model.Chapter;
-import com.tva.icd.model.Chapter;
 import com.tva.icd.service.ChapterService;
 
 @RestController
@@ -24,17 +27,19 @@ public class ChapterController {
 	@Autowired
 	private ChapterService chapterService;
 
+	private static final Logger logger = LogManager.getLogger(ChapterController.class.getName());
+
 	public ChapterController() {
-		System.out.println("Starting chapter controller");
+		logger.info("Initializing Chapter Controller");
 	}
 
 	@RequestMapping(value = "/chapter/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Chapter>> listAllChapters() {
-		
-		System.out.println("listAllChapters ResponseEntity");
-		List<Chapter> chapters = chapterService.getAllChapters();
-		
-		chapters.stream().forEach(chapter -> System.out.println(chapter.toString()));
+		logger.info("listAllChapters ResponseEntity");
+		List<Chapter> chapters = chapterService.getAllChapters(LocaleContextHolder.getLocale().getLanguage());
+
+		logger.info("Chapters found: " + chapters.size());
+		// chapters.stream().forEach(chapter -> System.out.println(chapter));
 
 		if (chapters.isEmpty()) {
 			return new ResponseEntity<List<Chapter>>(HttpStatus.NO_CONTENT);
@@ -45,10 +50,9 @@ public class ChapterController {
 	}
 
 	@RequestMapping(value = "/chapter/{chapterId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Chapter> getChapter(@PathVariable("chapterId") Integer chapterId) {
-		
-		System.out.println("Fetching Chapter with id " + chapterId);
-		
+	public ResponseEntity<Chapter> getChapter(@PathVariable("chapterId") String chapterId) {
+		logger.info("Fetching Chapter with id " + chapterId);
+
 		Chapter chapter = chapterService.getChapter(chapterId);
 		if (chapter == null) {
 			System.out.println("Chapter with id " + chapterId + " not found");
@@ -59,25 +63,24 @@ public class ChapterController {
 
 	@RequestMapping(value = "/chapter/", method = RequestMethod.POST)
 	public ResponseEntity<Void> createChapter(@RequestBody Chapter chapter, UriComponentsBuilder ucBuilder) {
-		
-		System.out.println("Creating Chapter " + chapter.getNumchap());
+		logger.info("Creating Chapter " + chapter.getId());
 
-		if (chapterService.getChapter(chapter.getChapterId()) != null) {
-			System.out.println("A Chapter with number " + chapter.getNumchap() + " already exist");
+		if (Objects.nonNull(chapterService.getChapter(chapter.getObjectId().toString()))) {
+			logger.info("A Chapter with number " + chapter.getId() + " already exist");
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
 
 		chapterService.addChapter(chapter);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/chapter/{id}").buildAndExpand(chapter.getChapterId()).toUri());
+		headers.setLocation(ucBuilder.path("/chapter/{id}").buildAndExpand(chapter.getId()).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/chapter/{chapterId}", method = RequestMethod.PUT)
-	public ResponseEntity<Chapter> updateChapter(@PathVariable("chapterId") Integer chapterId,@RequestBody Chapter chapter) {
-		
-		System.out.println("Updating Chapter " + chapterId);
+	public ResponseEntity<Chapter> updateChapter(@PathVariable("chapterId") String chapterId,
+			@RequestBody Chapter chapter) {
+		logger.info("Updating Chapter " + chapterId);
 
 		Chapter currentChapter = chapterService.getChapter(chapterId);
 
@@ -86,26 +89,26 @@ public class ChapterController {
 			return new ResponseEntity<Chapter>(HttpStatus.NOT_FOUND);
 		}
 
-		currentChapter.setNumchap(chapter.getNumchap());
-		currentChapter.setCatini(chapter.getCatini());
-		currentChapter.setCatfin(chapter.getCatfin());
-		currentChapter.setDescription(chapter.getDescription());
+		currentChapter.setId(chapter.getId());
+		// currentChapter.setCatini(chapter.getCatini());
+		// currentChapter.setCatfin(chapter.getCatfin());
+		currentChapter.setDescripion(chapter.getDescripion());
 
 		chapterService.updateChapter(currentChapter);
 		return new ResponseEntity<Chapter>(currentChapter, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/chapter/{chapterId}", method = RequestMethod.DELETE)
-	public ResponseEntity<Chapter> deleteChapter(@PathVariable("chapterId") Integer chapterId) {
-		System.out.println("Fetching & Deleting Chapter with id " + chapterId);
+	public ResponseEntity<Chapter> deleteChapter(@PathVariable("chapterId") String objectId) {
+		logger.info("Fetching & Deleting Chapter with id " + objectId);
 
-		Chapter chapter = chapterService.getChapter(chapterId);
+		Chapter chapter = chapterService.getChapter(objectId);
 		if (chapter == null) {
-			System.out.println("Unable to delete. Chapter with id " + chapterId + " not found");
+			logger.info("Unable to delete. Chapter with id " + objectId + " not found");
 			return new ResponseEntity<Chapter>(HttpStatus.NOT_FOUND);
 		}
 
-		chapterService.deleteChapter(chapterId);
+		chapterService.deleteChapter(chapter);
 		return new ResponseEntity<Chapter>(HttpStatus.NO_CONTENT);
 	}
 

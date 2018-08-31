@@ -1,12 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page session="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<spring:message code="classification.chapter.bread" var="chapterBreadTitle"/>
+<spring:message code="classification.group.bread" var="groupBreadTitle"/>
 <div class="starter-template">
-	<h1>ICD-10 version 2016</h1>
-	<p class="lead">Use this site to search the ICD information.<br> You can check using the classification.</p>
+	<h1><spring:message code="donation.title" /></h1>
+	<p class="lead"><spring:message code="donation.explain" /></p>
 </div>
 <div class="bread">
-<span class="breadStep" ng-if="chapterBread != ''" ng-click="chapterGo(chapterBread)"> Chapters > </span>
-<span class="breadStep" ng-if="chapterBread != ''" ng-click="groupGo(chapterBread)" >Chapter {{chapterBread}}</span>
-<span class="breadStep" ng-if="groupBread != ''"> > </span>
-<span class="breadStep" ng-bind="groupBread"></span>
+<span class="breadStep" ng-if="chapterBread != ''" ng-click="chapterGo()" title="${chapterBreadTitle}"><spring:message code="word.chapter" /> {{chapterBread}} > </span>
+<span class="breadStep" ng-if="groupBread != ''" ng-click="categoryGo(chapterObj)" title="${groupBreadTitle}"><spring:message code="word.group" /> {{groupBread}} </span>
 </div>
 <div ng-switch="steps">
 	<div ng-switch-when="chapter" chapter-page></div>

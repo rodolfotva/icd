@@ -1,78 +1,103 @@
 package com.tva.icd.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.List;
 
-@Entity
-@Table(name= "Chapter")
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+@Document(collection = "chapter")
 public class Chapter {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int chapterId;
-	
-	@Column
-	private String numchap; 
-	
-	@Column
-	private String catini; 
-	
-	@Column
-	private String catfin;
-	
-	@Column
-	private String description;
+	private ObjectId objectId;
+	@Field("id")
+	private String id;
+	@Field("desc")
+	private String descripion;
+	@Field("inc")
+	private List<String> includes;
+	@Field("addNote")
+	private List<String> addNotes;
+	@Field("exc")
+	private List<String> exludes;
 
-
-	public int getChapterId() {
-		return chapterId;
-	}
-	
-
-	public void setChapterId(int chapterId) {
-		this.chapterId = chapterId;
+	public Chapter() {
+		super();
 	}
 
-	public String getNumchap() {
-		return numchap;
+	public Chapter(String id, String descripion, List<String> includes, List<String> addNotes, List<String> exludes) {
+		super();
+		this.id = id;
+		this.descripion = descripion;
+		this.includes = includes;
+		this.addNotes = addNotes;
+		this.exludes = exludes;
 	}
 
-	public void setNumchap(String numchap) {
-		this.numchap = numchap;
+	public Chapter(ObjectId objectId, String id, String descripion, List<String> includes, List<String> addNotes,
+			List<String> exludes) {
+		super();
+		this.objectId = objectId;
+		this.id = id;
+		this.descripion = descripion;
+		this.includes = includes;
+		this.addNotes = addNotes;
+		this.exludes = exludes;
 	}
 
-	public String getCatini() {
-		return catini;
+	public ObjectId getObjectId() {
+		return objectId;
 	}
 
-	public void setCatini(String catini) {
-		this.catini = catini;
+	public void setObjectId(ObjectId objectId) {
+		objectId = objectId;
 	}
 
-	public String getCatfin() {
-		return catfin;
+	public String getId() {
+		return id;
 	}
 
-	public void setCatfin(String catfin) {
-		this.catfin = catfin;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getDescripion() {
+		return descripion;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDescripion(String descripion) {
+		this.descripion = descripion;
 	}
 
+	public List<String> getIncludes() {
+		return includes;
+	}
+
+	public void setIncludes(List<String> includes) {
+		this.includes = includes;
+	}
+
+	public List<String> getAddNotes() {
+		return addNotes;
+	}
+
+	public void setAddNotes(List<String> addNotes) {
+		this.addNotes = addNotes;
+	}
+
+	public List<String> getExludes() {
+		return exludes;
+	}
+
+	public void setExludes(List<String> exludes) {
+		this.exludes = exludes;
+	}
 
 	@Override
 	public String toString() {
-		return "Chapter [chapterId=" + chapterId + ", numchap=" + numchap + ", catini=" + catini + ", catfin=" + catfin + ", description=" + description + "]";
+		return "Chapter [ObjectId=" + objectId + ", id=" + id + ", descripion=" + descripion + "]";
 	}
-	
+
 }

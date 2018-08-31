@@ -7,12 +7,14 @@ angular.module('icd').controller('IcdController', ['$scope', 'IcdService', funct
 	$scope.chapters = {};
 	$scope.groups = {};
 	$scope.categorys = {};
-	
+	$scope.chapterId = '';
+	$scope.categoryId = '';
+	$scope.chapterObj;
 
     $scope.fetchAllChapters = function(){
         IcdService.fetchAllChapters().then(
-            function(data) {
-            	$scope.chapters = data;
+            function(response) {
+            	$scope.chapters = response.data;
             },
             function(errResponse){
                 console.log('Error while fetching Chapters');
@@ -20,10 +22,24 @@ angular.module('icd').controller('IcdController', ['$scope', 'IcdService', funct
         );
     }
     
-    $scope.fetchGroups = function(chapterId){
-    	IcdService.fetchGroups(chapterId).then(
-            function(data) {
-            	$scope.groups = data;
+    $scope.fetchCategorys = function(chapterObjId){
+    	IcdService.fetchCategorys(chapterObjId).then(
+    			function(response) {
+    				$scope.categorys = response.data['categoryLst'];
+    				$scope.chapterId = response.data['chapterObjId'];
+    			},
+    			function(errResponse){
+    				console.log('Error while fetching Categorys');
+    			}
+    	);
+    }
+
+    $scope.fetchGroups = function(categoryId){
+    	IcdService.fetchGroups(categoryId).then(
+            function(response) {
+            	$scope.groups = response.data['groupLst'];
+				$scope.chapterId = response.data['chapterObjId'];
+				$scope.categoryId = response.data['categoryId'];
             },
             function(errResponse){
                 console.log('Error while fetching Groups');
@@ -31,22 +47,11 @@ angular.module('icd').controller('IcdController', ['$scope', 'IcdService', funct
         );
     }
     
-    $scope.fetchCategorys = function(categoryId){
-    	IcdService.fetchCategorys(categoryId).then(
-            function(data) {
-            	$scope.categorys = data;
-            },
-            function(errResponse){
-                console.log('Error while fetching Categorys');
-            }
-        );
-    }
 
     $scope.makeSearch = function(icd, desc){
     	var key = null;
     	var value = null;
-    	
-    	if(icd == null) {
+    	if(icd == null || icd == '') {
     		key = 'description';
         	value = desc;
     	} else {
@@ -56,7 +61,9 @@ angular.module('icd').controller('IcdController', ['$scope', 'IcdService', funct
 
     	IcdService.makeSearch(key, value).then(
             function(data) {
-            	$scope.categorysSearch = data;
+            	$scope.searchResult = {};
+            	$scope.searchResult = data;
+            	$scope.$apply();
             },
             function(errResponse){
                 console.log('Error while fetching Categorys');

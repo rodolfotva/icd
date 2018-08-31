@@ -1,8 +1,8 @@
 angular.module('icd').factory('IcdService', ['$http', '$q', function($http, $q){
  
-    var REST_SERVICE_CHAPTER_URI = 'http://localhost:8080/Icd/chapter/';
-    var REST_SERVICE_GROUPS_URI = 'http://localhost:8080/Icd/groups/';
-    var REST_SERVICE_CATEGORYS_URI = 'http://localhost:8080/Icd/category/';
+    var REST_SERVICE_CHAPTER_URI = 'http://localhost:8082/Icd/chapter/';
+    var REST_SERVICE_CATEGORYS_URI = 'http://localhost:8082/Icd/category/';
+    var REST_SERVICE_GROUPS_URI = 'http://localhost:8082/Icd/group/';
  
     var factory = {
         fetchAllChapters:fetchAllChapters,
@@ -17,7 +17,7 @@ angular.module('icd').factory('IcdService', ['$http', '$q', function($http, $q){
         var deferred = $q.defer();
         $http.get(REST_SERVICE_CHAPTER_URI).then(
             function (response) {
-                deferred.resolve(response.data);
+                deferred.resolve(response);
             },
             function(errResponse){
                 console.log('Error while fetching Chapters');
@@ -28,11 +28,26 @@ angular.module('icd').factory('IcdService', ['$http', '$q', function($http, $q){
         return deferred.promise;
     }
     
-    function fetchGroups(chapterId) {
+    function fetchCategorys(chapterId) {
+    	var deferred = $q.defer();
+    	$http.get(REST_SERVICE_CATEGORYS_URI+chapterId).then(
+    			function (response) {
+    				deferred.resolve(response);
+    			},
+    			function(errResponse){
+    				console.log('Error while fetching Categorys');
+    				console.log(errResponse);
+    				deferred.reject(errResponse);
+    			}
+    	);
+    	return deferred.promise;
+    }
+
+    function fetchGroups(categoryId) {
         var deferred = $q.defer();
-        $http.get(REST_SERVICE_GROUPS_URI+chapterId).then(
+        $http.get(REST_SERVICE_GROUPS_URI+categoryId).then(
             function (response) {
-                deferred.resolve(response.data);
+                deferred.resolve(response);
             },
             function(errResponse){
                 console.log('Error while fetching Groups');
@@ -43,24 +58,10 @@ angular.module('icd').factory('IcdService', ['$http', '$q', function($http, $q){
         return deferred.promise;
     }
     
-    function fetchCategorys(categoryId) {
-        var deferred = $q.defer();
-        $http.get(REST_SERVICE_CATEGORYS_URI+categoryId).then(
-            function (response) {
-                deferred.resolve(response.data);
-            },
-            function(errResponse){
-                console.log('Error while fetching Categorys');
-                console.log(errResponse);
-                deferred.reject(errResponse);
-            }
-        );
-        return deferred.promise;
-    }
     
     function makeSearch(key, value) {
         var deferred = $q.defer();
-        $http.get(REST_SERVICE_CATEGORYS_URI+key+'/'+value).then(
+        $http.get(REST_SERVICE_GROUPS_URI+"/search/"+key+'/'+value).then(
             function (response) {
                 deferred.resolve(response.data);
             },

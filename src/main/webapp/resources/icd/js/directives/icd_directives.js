@@ -16,24 +16,26 @@ angular.module('icd').directive('classificationPage', function () {
 		restrict: 'AE',
 		controller: 'IcdController',
 		link: function($scope, $element, $attrs, ctrl){
-			$scope.groupGo = function(chapterId) {
-				$scope.cleanBread();
-				$scope.chapterBread = chapterId;
-				$scope.steps = 'group';
-				$scope.fetchGroups(chapterId);
-		    };
-		    
-			$scope.categoryGo = function(group) {
-				$scope.groupBread = 'Group ' + group.catini + ' to ' + group.catfin;
-				$scope.steps = 'category';
-				$scope.fetchCategorys(group.groupId);
-		    };
-		    
 			$scope.chapterGo = function() {
 				$scope.cleanBread();
 				$scope.steps = 'chapter';
 				$scope.fetchAllChapters();
+			};
+
+			$scope.categoryGo = function(chapter) {
+				$scope.cleanBread();
+				$scope.chapterBread = chapter.id;
+				$scope.steps = 'category';
+				$scope.chapterObj = chapter;
+				$scope.fetchCategorys(chapter.id);
+			};
+
+			$scope.groupGo = function(category) {
+				$scope.groupBread = category.first + " - " + category.last;
+				$scope.steps = 'group';
+				$scope.fetchGroups(category.id);
 		    };
+		    
 		}
     };
 });

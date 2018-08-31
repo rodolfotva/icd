@@ -1,69 +1,96 @@
 package com.tva.icd.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Entity
-@Table(name= "Category")
+@Document(collection = "category")
 public class Category {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int categoryId;
+	private ObjectId objectId;
+	@Field("id")
+	private String id;
+	@Field("fst")
+	private String first;
+	@Field("lst")
+	private String last;
+	private String title;
+	@Field("chId")
+	private String chapterId;
 
-	@Column
-	private int groupId;
-	
-	@Column
-	private String icd; 
-	
-	@Column
-	private String description;
-
-	public int getCategoryId() {
-		return categoryId;
+	public Category() {
+		super();
 	}
 
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
+	public Category(String id, String first, String last, String title, String chapterId) {
+		super();
+		this.id = id;
+		this.first = first;
+		this.last = last;
+		this.title = title;
+		this.chapterId = chapterId;
+
 	}
 
-	public int getGroupId() {
-		return groupId;
+	public Category(ObjectId objectId, String id, String first, String last, String title, String chapterId) {
+		super();
+		this.objectId = objectId;
+		this.id = id;
+		this.first = first;
+		this.last = last;
+		this.title = title;
+		this.chapterId = chapterId;
+
 	}
 
-	public void setGroupId(int groupId) {
-		this.groupId = groupId;
+	public ObjectId getObjectId() {
+		return objectId;
 	}
 
-	public String getIcd() {
-		return icd;
+	public void setObjectId(ObjectId objectId) {
+		this.objectId = objectId;
 	}
 
-	public void setIcd(String icd) {
-		this.icd = icd;
+	public String getId() {
+		return id;
 	}
 
-	public String getDescription() {
-		return description;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public String getFirst() {
+		return first;
 	}
 
-	@Override
-	public String toString() {
-		return "Category [categoryId=" + categoryId + ", icd=" + icd + ", description=" + description + "]";
+	public void setFirst(String first) {
+		this.first = first;
 	}
-	
-	
+
+	public String getLast() {
+		return last;
+	}
+
+	public void setLast(String last) {
+		this.last = last;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getChapterId() {
+		return chapterId;
+	}
+
+	public void setChapterId(String chapterId) {
+		this.chapterId = chapterId;
+	}
 
 }

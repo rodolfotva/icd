@@ -1,49 +1,74 @@
 package com.tva.icd.service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tva.icd.dao.ChapterDao;
 import com.tva.icd.model.Chapter;
+import com.tva.icd.repositories.ChapterFrRepository;
+import com.tva.icd.repositories.ChapterPtRepository;
+import com.tva.icd.repositories.ChapterRepository;
 
-@Service
+@Service("chapterService")
 @Transactional
 public class ChapterServiceImpl implements ChapterService {
 
 	@Autowired
-	private ChapterDao chapterDao;
-	
+	private ChapterRepository chapterRepo;
+	@Autowired
+	private ChapterPtRepository chapterPtRepo;
+	@Autowired
+	private ChapterFrRepository chapterFrRepo;
+
 	@Override
-	@Transactional
 	public void addChapter(Chapter chapter) {
-		chapterDao.addChapter(chapter);
+		chapterRepo.insert(chapter);
 	}
 
 	@Override
-	@Transactional
-	public List<Chapter> getAllChapters() {
-		return chapterDao.getAllChapters();
+	public List<Chapter> getAllChapters(String locale) {
+		switch (locale) {
+		case "en":
+			return chapterRepo.findAll();
+		case "pt":
+			List<Chapter> temp = new LinkedList<>();
+			chapterPtRepo.findAll().stream().forEach(cha -> {
+				temp.add(new Chapter(cha.getObjectId(), cha.getId(), cha.getDescripion(), null, null, null));
+			});
+			return temp;
+		case "fr":
+			List<Chapter> tempFr = new LinkedList<>();
+			chapterFrRepo.findAll().stream().forEach(cha -> {
+				tempFr.add(new Chapter(cha.getObjectId(), cha.getId(), cha.getDescripion(), null, null, null));
+			});
+			return tempFr;
+		default:
+			return chapterRepo.findAll();
+		}
 	}
 
 	@Override
-	@Transactional
-	public void deleteChapter(Integer chapterId) {
-		chapterDao.deleteChapter(chapterId);
+	public void deleteChapter(Chapter chapter) {
+		chapterRepo.delete(chapter);
 	}
 
 	@Override
-	@Transactional
 	public Chapter updateChapter(Chapter chapter) {
-		return chapterDao.updateChapter(chapter);
+		Chapter chapterTmp = chapterRepo.save(chapter);
+		return chapterTmp;
 	}
 
 	@Override
-	@Transactional
-	public Chapter getChapter(Integer chapterId) {
-		return chapterDao.getChapter(chapterId);
+	public Chapter getChapter(String objectId) {
+		return chapterRepo.findByid(objectId);
+	}
+
+	@Override
+	public Chapter getChapterBtId(String id) {
+		return chapterRepo.findByid(id);
 	}
 
 }

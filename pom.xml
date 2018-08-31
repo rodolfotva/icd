@@ -5,18 +5,15 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>Icd</name>
-  <description>Icd 10 2016 list of desis</description>
+  <description>Icd 10 2017 list of desis</description>
   
 	<url>http://maven.apache.org</url>
-	<!-- Specifying the Versions of Spring, Hibernate, MySQL etc -->
 	<properties>
-		<spring.version>4.1.5.RELEASE</spring.version>
-		<hibernate.version>4.3.8.Final</hibernate.version>
-		<mysql.version>6.0.6</mysql.version>
-		<jackson-version>2.2.3</jackson-version>
+		<spring.version>5.0.8.RELEASE</spring.version>
+		<jackson-version>2.9.3</jackson-version>
 		<junit-version>4.11</junit-version>
 		<servlet-api-version>3.1.0</servlet-api-version>
-		<jsp-version>2.1</jsp-version>
+		<jsp-version>2.3.1</jsp-version>
 		<jstl-version>1.2</jstl-version>
 		<java.version>1.8</java.version>
 
@@ -59,24 +56,24 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Hibernate 4 dependencies -->
+		<!-- Spring Data dependencies -->
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate.version}</version>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>2.0.9.RELEASE</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2.2</version>
 		</dependency>
 
+		<!--MongoDB Connector -->
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-c3p0</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-
-		<!--MYSQL Connector -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.version}</version>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>3.6.1</version>
 		</dependency>
 
 		<!-- Servlet and JSP -->
@@ -88,7 +85,7 @@
 
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
 			<version>${jsp-version}</version>
 			<scope>provided</scope>
 		</dependency>
@@ -123,6 +120,18 @@
 			<artifactId>junit</artifactId>
 			<version>${junit-version}</version>
 			<scope>test</scope>
+		</dependency>
+		
+		<!-- log4j -->
+		<dependency>
+		  <groupId>org.apache.logging.log4j</groupId>
+		  <artifactId>log4j-api</artifactId>
+		  <version>2.9.1</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.logging.log4j</groupId>
+		  <artifactId>log4j-core</artifactId>
+		  <version>2.9.1</version>
 		</dependency>
 
 	</dependencies>

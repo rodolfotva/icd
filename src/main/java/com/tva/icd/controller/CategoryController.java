@@ -1,8 +1,14 @@
 package com.tva.icd.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,47 +26,43 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
 
+	private static final Logger logger = LogManager.getLogger(CategoryController.class.getName());
+
 	public CategoryController() {
-		System.out.println("Starting category controller");
+		logger.info("Initializing Category Controller");
 	}
 
 	@RequestMapping(value = "/category/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Category>> listAllCategorys() {
-		
-		System.out.println("listAllCategorys ResponseEntity");
-		List<Category> category = categoryService.getAllCategorys();
+		logger.info("listAllGroups ResponseEntity");
+		List<Category> categoryLst = categoryService.getAllCategorys();
 
-		if (category.isEmpty()) {
+		if (Objects.isNull(categoryLst) || categoryLst.isEmpty()) {
 			return new ResponseEntity<List<Category>>(HttpStatus.NO_CONTENT);
 		}
 
-		return new ResponseEntity<List<Category>>(category, HttpStatus.OK);
+		logger.info("Categorys found: " + categoryLst.size());
+		return new ResponseEntity<List<Category>>(categoryLst, HttpStatus.OK);
 
 	}
 
 	@RequestMapping(value = "/category/{chapterId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Category>> getCategory(@PathVariable("chapterId") Integer chapterId) {
-		System.out.println("Fetching Category with id " + chapterId);
-		List<Category> category = categoryService.getCategoryByGroup(chapterId);
-		
-		if (category.isEmpty()) {
-			return new ResponseEntity<List<Category>>(HttpStatus.NO_CONTENT);
+	public ResponseEntity<Map<String, Object>> getCategoryLstByChapter(@PathVariable("chapterId") String chapterId) {
+		logger.info("Fetching Categorys with Chapter Objectid " + chapterId);
+		Map<String, Object> values = new HashMap<String, Object>();
+
+		List<Category> categoryLst = categoryService.getCategoryByChapterId(chapterId,
+				LocaleContextHolder.getLocale().getLanguage());
+		values.put("categoryLst", categoryLst);
+		values.put("chapterObjId", chapterId);
+
+		if (Objects.isNull(categoryLst) || categoryLst.isEmpty()) {
+			logger.info("Category List from chapter id " + chapterId + " not found");
+			return new ResponseEntity<Map<String, Object>>(HttpStatus.NO_CONTENT);
 		}
 
-		return new ResponseEntity<List<Category>>(category, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/category/{column}/{value}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Category>> getCategoryLike(@PathVariable("column") String column, @PathVariable("value") String value) {
-		System.out.println("Fetching Category with " + column +": "+ value);
-		List<Category> category = categoryService.getCategoryLike(column, value);
-		category.stream().forEach(group -> System.out.println(group.toString()));
-		
-		if (category.isEmpty()) {
-			return new ResponseEntity<List<Category>>(HttpStatus.NO_CONTENT);
-		}
-
-		return new ResponseEntity<List<Category>>(category, HttpStatus.OK);
+		logger.info("Categorys found: " + categoryLst.size());
+		return new ResponseEntity<Map<String, Object>>(values, HttpStatus.OK);
 	}
 
 }
