@@ -47,4 +47,7 @@ body {
 .donateBtn {
 	padding-top: 50px;
 }	
+
+.search-filter {
+   font-weight: bold;
 }

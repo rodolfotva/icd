@@ -1,4 +1,4 @@
-angular.module('icd').controller('IcdController', ['$scope', 'IcdService', function($scope, IcdService) {
+angular.module('icd', ['ngSanitize']).controller('IcdController', ['$scope', 'IcdService', function($scope, IcdService) {
 	$scope.chapterBread = '';
 	$scope.groupBread = '';
 	$scope.menu = 'search';
@@ -57,6 +57,10 @@ angular.module('icd').controller('IcdController', ['$scope', 'IcdService', funct
     	} else {
     		key = 'icd';
         	value = icd;
+    	}
+
+    	if(value == null || value == ''){
+    		return;
     	}
 
     	IcdService.makeSearch(key, value).then(

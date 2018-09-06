@@ -13,11 +13,16 @@
     
     <script src="<c:url value="/resources/icd/js/jquery-min.js" />"></script>
     <script src="<c:url value="/resources/icd/js/bootstrap.js" />"></script>
-    <script src="<c:url value="/resources/icd/js/angular.min.js" />"></script>
+    <script src="<c:url value="/resources/icd/js/angular173.js" />"></script>
     <script src="<c:url value="/resources/icd/js/icd.js" />"></script>
     <script src="<c:url value="/resources/icd/js/controller/icd_controller.js" />"></script>
     <script src="<c:url value="/resources/icd/js/service/icd_service.js" />"></script>
     <script src="<c:url value="/resources/icd/js/directives/icd_directives.js" />"></script>
+    <script src="<c:url value="/resources/icd/js/filters/icd_filters.js" />"></script>
+    
+    <script src="<c:url value="/resources/icd/js/angular-sanitize173.js" />"></script>
+    <script src="<c:url value="/resources/icd/js/angular-animate173.js" />"></script>
+    <script src="<c:url value="/resources/icd/js/angular-resource173.js" />"></script>
 
   </head>
   	<body ng-app="icd" class="ng-cloak">

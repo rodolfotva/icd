@@ -32,12 +32,12 @@
 		</thead>
 		<tbody ng-repeat="result in searchResult">
 			<tr>
-				<td>{{result.name}}</td>
-				<td>{{result.description}}</td>
+				<td><div ng-bind-html="result.name | searchIcdFilter:icdSearch" /></td>
+				<td><div ng-bind-html="result.description | searchDescFilter:descSearch" /></td>
 			</tr>
 			<tr ng-repeat="sub in result.subGroups">
-				<td>{{sub.name}}</td>
-				<td>{{sub.description}}</td>
+				<td><div ng-bind-html="sub.name | searchIcdFilter:icdSearch" /></td>
+				<td><div ng-bind-html="sub.description | searchDescFilter:descSearch" /></td>
 			</tr>
 		</tbody>
 	</table>
