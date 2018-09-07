@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
@@ -21,7 +20,6 @@ import com.mongodb.ServerAddress;
 @Configuration
 @ComponentScan(basePackages = "com.tva.icd")
 @EnableMongoRepositories({ "com.tva.icd.repositories" })
-@EnableWebMvc
 public class ApplicationConfig {
 
 	@Bean
