@@ -26,8 +26,8 @@ public class ApplicationConfig {
 
 	@Bean
 	public MongoDbFactory mongoDbFactory() throws Exception {
-		String pass = "";
-		String user = "";
+		String pass = "Xrt2Dr913";
+		String user = "rodolfotva";
 
 		List<ServerAddress> saList = new ArrayList<>();
 		saList.add(new ServerAddress("cluster0-shard-00-00-fvnbi.mongodb.net", 27017));
