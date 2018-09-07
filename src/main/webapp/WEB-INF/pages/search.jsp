@@ -18,7 +18,7 @@
 			<input type="text" class="form-control" placeholder="${icdSearchHolder}" ng-focus="icdSearch = '' " ng-model="descSearch">
 		</div>
 		<div class="col-md-3">
-			<button type="button" class="btn btn-default" ng-click="search()" ng-disabled="false"><spring:message code="world.search" /></button>
+			<button type="button" class="btn btn-default"  ng-click="search()" ng-disabled="searching" ><i ng-if="searching" class="fa fa-spinner fa-spin" style="font-size:18px" ></i> <spring:message code="world.search" /></button>
 		</div>
 	</form>
 </div>			

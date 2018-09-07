@@ -10,6 +10,7 @@ angular.module('icd', ['ngSanitize']).controller('IcdController', ['$scope', 'Ic
 	$scope.chapterId = '';
 	$scope.categoryId = '';
 	$scope.chapterObj;
+	$scope.searching = false;
 
     $scope.fetchAllChapters = function(){
         IcdService.fetchAllChapters().then(
@@ -63,13 +64,17 @@ angular.module('icd', ['ngSanitize']).controller('IcdController', ['$scope', 'Ic
     		return;
     	}
 
+    	$scope.searchResult = {};
+    	$scope.searching = true;
+    	$scope.$apply;
+    	
     	IcdService.makeSearch(key, value).then(
             function(data) {
-            	$scope.searchResult = {};
             	$scope.searchResult = data;
-            	$scope.$apply();
+            	$scope.searching = false;
             },
             function(errResponse){
+            	$scope.searching = false;
                 console.log('Error while fetching Categorys');
             }
         );

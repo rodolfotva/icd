@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,13 +50,11 @@ public class GroupController {
 	}
 
 	@RequestMapping(value = "/{categoryId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> getGroupsByChapterandCategory(
-			@PathVariable("categoryId") String categoryId) {
+	public ResponseEntity<Map<String, Object>> getGroupsByChapterandCategory(@PathVariable("categoryId") String categoryId) {
 		logger.info("Fetching Groups with Category Id " + categoryId);
 		Map<String, Object> values = new HashMap<String, Object>();
 
-		List<Group> groupLst = groupService.getGroupByCategory(categoryId,
-				LocaleContextHolder.getLocale().getLanguage());
+		List<Group> groupLst = groupService.getGroupByCategory(categoryId, LocaleContextHolder.getLocale().getLanguage());
 		values.put("groupLst", groupLst);
 		values.put("categoryId", categoryId);
 
@@ -72,8 +71,7 @@ public class GroupController {
 	public ResponseEntity<List<Group>> getSearchByIcd(@PathVariable("value") String value) {
 		logger.info("Searching Group by icd " + value);
 		List<Group> groups = new ArrayList<Group>();
-		groups = groupService.getGroupByName(".*" + value.toUpperCase() + ".*",
-				LocaleContextHolder.getLocale().getLanguage());
+		groups = groupService.getGroupByName(".*" + value.toUpperCase() + ".*", LocaleContextHolder.getLocale().getLanguage());
 
 		if (Objects.isNull(groups) || groups.isEmpty()) {
 			logger.info("Group by icd: " + value + " not found");
@@ -87,18 +85,19 @@ public class GroupController {
 	@RequestMapping(value = "/search/description/{value}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Group>> getSearchByDescription(@PathVariable("value") String value) {
 		logger.info("Searching Group by description " + value);
-		List<Group> groups = new ArrayList<Group>();
-		groups = groupService.getGroupByDesc(".*" + value + ".*", LocaleContextHolder.getLocale().getLanguage());
-		groups.addAll(
-				groupService.findLikeSubGroupDesc(".*" + value + ".*", LocaleContextHolder.getLocale().getLanguage()));
 
-		if (Objects.isNull(groups) || groups.isEmpty()) {
+		final List<Group> groups = groupService.getGroupByDesc(".*" + value + ".*", LocaleContextHolder.getLocale().getLanguage());
+		final List<Group> subGroups = groupService.findLikeSubGroupDesc(".*" + value + ".*", LocaleContextHolder.getLocale().getLanguage());
+
+		List<Group> groupOutput = groups.stream().filter(gr -> subGroups.stream().map(Group::getName).anyMatch(name -> name.equals(gr.getName()))).collect(Collectors.toList());
+
+		if (Objects.isNull(groupOutput) || groupOutput.isEmpty()) {
 			logger.info("Group by description: " + value + " not found");
 			return new ResponseEntity<List<Group>>(HttpStatus.NO_CONTENT);
 		}
 
-		logger.info("Group found: " + groups.size());
-		return new ResponseEntity<List<Group>>(groups, HttpStatus.OK);
+		logger.info("Group found: " + groupOutput.size());
+		return new ResponseEntity<List<Group>>(groupOutput, HttpStatus.OK);
 	}
 
 }
