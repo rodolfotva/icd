@@ -5,7 +5,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>Icd</name>
-  <description>Icd 10 2017 list of desis</description>
+  <description>Icd 10 2017 list of diseases</description>
   
 	<url>http://maven.apache.org</url>
 	<properties>
@@ -16,7 +16,7 @@
 		<jsp-version>2.3.1</jsp-version>
 		<jstl-version>1.2</jstl-version>
 		<java.version>1.8</java.version>
-
+		<tomcat.version>8.5.23</tomcat.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -146,6 +146,33 @@
 		  <artifactId>log4j-core</artifactId>
 		  <version>2.9.1</version>
 		</dependency>
+		
+		<!-- Tomcat 8.5 -->
+		<dependency>
+	        <groupId>org.apache.tomcat.embed</groupId>
+	        <artifactId>tomcat-embed-core</artifactId>
+	        <version>${tomcat.version}</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.apache.tomcat.embed</groupId>
+	        <artifactId>tomcat-embed-jasper</artifactId>
+	        <version>${tomcat.version}</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.apache.tomcat</groupId>
+	        <artifactId>tomcat-jasper</artifactId>
+	        <version>${tomcat.version}</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.apache.tomcat</groupId>
+	        <artifactId>tomcat-jasper-el</artifactId>
+	        <version>${tomcat.version}</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.apache.tomcat</groupId>
+	        <artifactId>tomcat-jsp-api</artifactId>
+	        <version>${tomcat.version}</version>
+	    </dependency>
 
 	</dependencies>
 	<build>
@@ -160,10 +187,12 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
+			
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.2</version>
             </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -186,7 +215,30 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>            			
+            </plugin>
+             
+	        <plugin>
+	            <groupId>org.codehaus.mojo</groupId>
+	            <artifactId>appassembler-maven-plugin</artifactId>
+	            <version>2.0.0</version>
+	            <configuration>
+	                <assembleDirectory>target</assembleDirectory>
+	                <programs>
+	                    <program>
+	                        <mainClass>com.tva.icd.launch.Main</mainClass>
+	                        <name>webapp</name>
+	                    </program>
+	                </programs>
+	            </configuration>
+	            <executions>
+	                <execution>
+	                    <phase>package</phase>
+	                    <goals>
+	                        <goal>assemble</goal>
+	                    </goals>
+	                </execution>
+	            </executions>
+	        </plugin>                        			
 		</plugins>
 	</build>	
 </project>
