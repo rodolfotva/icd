@@ -45,9 +45,9 @@
 							<li ng-class="{active : menu == 'donation'}"><a href="#" ng-click="menuChange('donation')"><spring:message code="menu.donation" /></a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
-			              <li><a href="/Icd/en/" title="English"><img src="<c:url value="/resources/icd/images/usa.png" />" height="16" width="16" /></a></li>
-			              <li><a href="/Icd/fr/" title="Français"><img src="<c:url value="/resources/icd/images/france.png" />" height="16" width="16" /></a></li>
-			              <li><a href="/Icd/pt/" title="Portugues"><img src="<c:url value="/resources/icd/images/brazil.png" />" height="16" width="16" /></a></li>
+			              <li><a href="/en/" title="English"><img src="<c:url value="/resources/icd/images/usa.png" />" height="16" width="16" /></a></li>
+			              <li><a href="/fr/" title="Français"><img src="<c:url value="/resources/icd/images/france.png" />" height="16" width="16" /></a></li>
+			              <li><a href="/pt/" title="Portugues"><img src="<c:url value="/resources/icd/images/brazil.png" />" height="16" width="16" /></a></li>
             			</ul>
 					</div>
 				</div>

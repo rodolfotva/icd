@@ -1,8 +1,8 @@
 angular.module('icd').factory('IcdService', ['$http', '$q', function($http, $q){
  
-    var REST_SERVICE_CHAPTER_URI = '/Icd/chapter/';
-    var REST_SERVICE_CATEGORYS_URI = '/Icd/category/';
-    var REST_SERVICE_GROUPS_URI = '/Icd/group/';
+    var REST_SERVICE_CHAPTER_URI = '/chapter/';
+    var REST_SERVICE_CATEGORYS_URI = '/category/';
+    var REST_SERVICE_GROUPS_URI = '/group/';
  
     var factory = {
         fetchAllChapters:fetchAllChapters,
