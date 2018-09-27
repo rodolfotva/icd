@@ -37,7 +37,7 @@ public class ChapterController {
 	@RequestMapping(value = "/chapter/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Chapter>> listAllChapters() {
 		logger.info("listAllChapters ResponseEntity");
-		List<Chapter> chapters = chapterService.getAllChapters(LocaleContextHolder.getLocale().getLanguage()).stream().sorted((u1, u2) -> u1.getId().compareTo(u2.getId())).collect(Collectors.toList());
+		List<Chapter> chapters = chapterService.getAllChapters(LocaleContextHolder.getLocale().getLanguage()).stream().sorted((u1, u2) -> u1.getIntId().compareTo(u2.getIntId())).collect(Collectors.toList());
 
 		logger.info("Chapters found: " + chapters.size());
 		// chapters.stream().forEach(chapter -> System.out.println(chapter));

@@ -46,13 +46,17 @@ public class Chapter {
 		this.addNotes = addNotes;
 		this.exludes = exludes;
 	}
+	
+	public Integer getIntId() {
+	  return Integer.valueOf(this.getId());
+	}
 
 	public ObjectId getObjectId() {
 		return objectId;
 	}
 
 	public void setObjectId(ObjectId objectId) {
-		objectId = objectId;
+	  this.objectId = objectId;
 	}
 
 	public String getId() {
