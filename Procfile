@@ -1,1 +1,1 @@
-web: mvn clean install tomcat7:run
+web: tomcat7:run
