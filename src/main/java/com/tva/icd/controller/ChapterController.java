@@ -2,6 +2,7 @@ package com.tva.icd.controller;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,7 +37,7 @@ public class ChapterController {
 	@RequestMapping(value = "/chapter/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Chapter>> listAllChapters() {
 		logger.info("listAllChapters ResponseEntity");
-		List<Chapter> chapters = chapterService.getAllChapters(LocaleContextHolder.getLocale().getLanguage());
+		List<Chapter> chapters = chapterService.getAllChapters(LocaleContextHolder.getLocale().getLanguage()).stream().sorted((u1, u2) -> u1.getId().compareTo(u2.getId())).collect(Collectors.toList());
 
 		logger.info("Chapters found: " + chapters.size());
 		// chapters.stream().forEach(chapter -> System.out.println(chapter));

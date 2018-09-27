@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -51,8 +52,7 @@ public class CategoryController {
 		logger.info("Fetching Categorys with Chapter Objectid " + chapterId);
 		Map<String, Object> values = new HashMap<String, Object>();
 
-		List<Category> categoryLst = categoryService.getCategoryByChapterId(chapterId,
-				LocaleContextHolder.getLocale().getLanguage());
+		List<Category> categoryLst = categoryService.getCategoryByChapterId(chapterId,LocaleContextHolder.getLocale().getLanguage()).stream().sorted((u1, u2) -> u1.getId().compareTo(u2.getId())).collect(Collectors.toList());
 		values.put("categoryLst", categoryLst);
 		values.put("chapterObjId", chapterId);
 

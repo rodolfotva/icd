@@ -54,7 +54,7 @@ public class GroupController {
 		logger.info("Fetching Groups with Category Id " + categoryId);
 		Map<String, Object> values = new HashMap<String, Object>();
 
-		List<Group> groupLst = groupService.getGroupByCategory(categoryId, LocaleContextHolder.getLocale().getLanguage());
+		List<Group> groupLst = groupService.getGroupByCategory(categoryId, LocaleContextHolder.getLocale().getLanguage()).stream().sorted((u1, u2) -> u1.getId().compareTo(u2.getId())).collect(Collectors.toList());
 		values.put("groupLst", groupLst);
 		values.put("categoryId", categoryId);
 
