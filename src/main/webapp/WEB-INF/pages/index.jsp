@@ -7,6 +7,8 @@
     <title>:: ICD-10 ::</title>
     <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
     
+    <link rel="icon" href="<c:url value="/resources/icd/images/favicon.ico" />" type="image/x-icon" >
+    
     <link href="<c:url value="/resources/icd/css/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/icd/css/icd.css" />" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
