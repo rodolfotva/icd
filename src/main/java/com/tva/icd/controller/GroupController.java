@@ -71,7 +71,7 @@ public class GroupController {
 	public ResponseEntity<List<Group>> getSearchByIcd(@PathVariable("value") String value) {
 		logger.info("Searching Group by icd " + value);
 		List<Group> groups = new ArrayList<Group>();
-		groups = groupService.getGroupByName(".*" + value.toUpperCase() + ".*", LocaleContextHolder.getLocale().getLanguage());
+		groups = groupService.getGroupByName(".*" + value.toUpperCase().trim() + ".*", LocaleContextHolder.getLocale().getLanguage());
 
 		if (Objects.isNull(groups) || groups.isEmpty()) {
 			logger.info("Group by icd: " + value + " not found");
@@ -86,8 +86,8 @@ public class GroupController {
 	public ResponseEntity<List<Group>> getSearchByDescription(@PathVariable("value") String value) {
 		logger.info("Searching Group by description " + value);
 
-		final List<Group> groups = groupService.getGroupByDesc(".*" + value + ".*", LocaleContextHolder.getLocale().getLanguage());
-		final List<Group> subGroups = groupService.findLikeSubGroupDesc(".*" + value + ".*", LocaleContextHolder.getLocale().getLanguage());
+		final List<Group> groups = groupService.getGroupByDesc(".*" + value.trim() + ".*", LocaleContextHolder.getLocale().getLanguage());
+		final List<Group> subGroups = groupService.findLikeSubGroupDesc(".*" + value.trim() + ".*", LocaleContextHolder.getLocale().getLanguage());
 
 		List<Group> groupOutput = groups.stream().filter(gr -> subGroups.stream().map(Group::getName).anyMatch(name -> name.equals(gr.getName()))).collect(Collectors.toList());
 
