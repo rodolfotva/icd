@@ -63,7 +63,7 @@
 
 			<div class="footer">
 				<div class="footer-copyright text-center py-3">© 2018 Copyright:
-				  <a href="https://www.myicd10.com/"> myicd10.com</a>
+				  <a href="https://www.checkicd.com/"> checkicd.com</a>
 				</div>
 			</div>
 		</div>	
