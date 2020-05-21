@@ -7,7 +7,7 @@ public class SubGroup {
   private String name;
   @Field("desc")
   private String description;
-  
+
   public SubGroup() {
     super();
   }

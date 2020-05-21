@@ -8,57 +8,57 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "chapterPt")
 public class ChapterPt {
 
-	@Id
-	private ObjectId objectId;
-	@Field("id")
-	private String id;
-	@Field("desc")
-	private String descripion;
+  @Id
+  private ObjectId objectId;
+  @Field("id")
+  private String id;
+  @Field("desc")
+  private String descripion;
 
-	public ChapterPt() {
-		super();
-	}
+  public ChapterPt() {
+    super();
+  }
 
-	public ChapterPt(String id, String descripion) {
-		super();
-		this.id = id;
-		this.descripion = descripion;
-	}
+  public ChapterPt(String id, String descripion) {
+    super();
+    this.id = id;
+    this.descripion = descripion;
+  }
 
-	public ChapterPt(ObjectId objectId, String id, String descripion) {
-		super();
-		this.objectId = objectId;
-		this.id = id;
-		this.descripion = descripion;
-	}
+  public ChapterPt(ObjectId objectId, String id, String descripion) {
+    super();
+    this.objectId = objectId;
+    this.id = id;
+    this.descripion = descripion;
+  }
 
-	public ObjectId getObjectId() {
-		return objectId;
-	}
+  public ObjectId getObjectId() {
+    return objectId;
+  }
 
-	public void setObjectId(ObjectId objectId) {
-		this.objectId = objectId;
-	}
+  public void setObjectId(ObjectId objectId) {
+    this.objectId = objectId;
+  }
 
-	public String getId() {
-		return id;
-	}
+  public String getId() {
+    return id;
+  }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+  public void setId(String id) {
+    this.id = id;
+  }
 
-	public String getDescripion() {
-		return descripion;
-	}
+  public String getDescripion() {
+    return descripion;
+  }
 
-	public void setDescripion(String descripion) {
-		this.descripion = descripion;
-	}
+  public void setDescripion(String descripion) {
+    this.descripion = descripion;
+  }
 
-	@Override
-	public String toString() {
-		return "Chapter [ObjectId=" + objectId + ", id=" + id + ", descripion=" + descripion + "]";
-	}
+  @Override
+  public String toString() {
+    return "Chapter [ObjectId=" + objectId + ", id=" + id + ", descripion=" + descripion + "]";
+  }
 
 }
