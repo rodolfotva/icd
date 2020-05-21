@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/")
 public class IndexController {
-    
-    private static final Logger logger = LogManager.getLogger(IndexController.class.getName());
-  
-	@RequestMapping(method = RequestMethod.GET)
-	public String getIndexPage(){
-	    logger.info("loading index page");
-	    return "redirect:en/";
-	}
+
+  private static final Logger logger = LogManager.getLogger(IndexController.class.getName());
+
+  @RequestMapping(method = RequestMethod.GET)
+  public String getIndexPage() {
+    logger.info("loading index page");
+    return "redirect:en/";
+  }
 }

@@ -8,7 +8,6 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 import com.tva.icd.interceptor.UrlLocaleInterceptor;
 import com.tva.icd.resolver.UrlLocaleResolver;
 
@@ -16,25 +15,25 @@ import com.tva.icd.resolver.UrlLocaleResolver;
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
 
-	@Bean(name = "messageSource")
-	public MessageSource getMessageResource() {
-		ReloadableResourceBundleMessageSource messageResource = new ReloadableResourceBundleMessageSource();
+  @Bean(name = "messageSource")
+  public MessageSource getMessageResource() {
+    ReloadableResourceBundleMessageSource messageResource = new ReloadableResourceBundleMessageSource();
 
-		messageResource.setBasename("classpath:i18n/messages");
-		messageResource.setDefaultEncoding("UTF-8");
-		return messageResource;
-	}
+    messageResource.setBasename("classpath:i18n/messages");
+    messageResource.setDefaultEncoding("UTF-8");
+    return messageResource;
+  }
 
-	@Bean(name = "localeResolver")
-	public LocaleResolver getLocaleResolver() {
-		LocaleResolver resolver = new UrlLocaleResolver();
-		return resolver;
-	}
+  @Bean(name = "localeResolver")
+  public LocaleResolver getLocaleResolver() {
+    LocaleResolver resolver = new UrlLocaleResolver();
+    return resolver;
+  }
 
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		UrlLocaleInterceptor localeInterceptor = new UrlLocaleInterceptor();
-		registry.addInterceptor(localeInterceptor).addPathPatterns("/en/*", "/fr/*", "/pt/*");
-	}
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    UrlLocaleInterceptor localeInterceptor = new UrlLocaleInterceptor();
+    registry.addInterceptor(localeInterceptor).addPathPatterns("/en/*", "/fr/*", "/pt/*");
+  }
 
 }
