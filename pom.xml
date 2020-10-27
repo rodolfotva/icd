@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.tva.icd</groupId>
   <artifactId>Icd</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <packaging>war</packaging>
   <name>Icd</name>
   <description>Icd 10 2017 list of diseases</description>
@@ -10,7 +10,7 @@
 	<url>http://maven.apache.org</url>
 	
 	<properties>
-		<spring.version>5.2.7.RELEASE</spring.version>
+		<spring.version>5.0.8.RELEASE</spring.version>
 		<jackson-version>2.11.0</jackson-version>
 		<junit-version>4.13.1</junit-version>
 		<servlet-api-version>4.0.1</servlet-api-version>
